@@ -8,7 +8,7 @@ Therefore, this extension allows you to focus the search field by **pressing the
 
 Very useful on sites like Google, Wikipedia, Linguee, etc.
 
----
+
 ## License
 
 

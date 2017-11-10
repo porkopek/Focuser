@@ -32,7 +32,10 @@
   //focus the input textbox if user presses shift key
   function focusInput(e) {
     if (e.keyCode === keys.shift) {
-      input && input.focus();
+      if (input) {
+        input.focus();
+        input.setSelectionRange(0, input.value.length);
+      }
     }
   }
 

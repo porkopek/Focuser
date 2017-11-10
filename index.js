@@ -9,7 +9,8 @@
 
   //shift keyCode
   const keys = {
-    shift: 16
+    shift: 16,
+    escape: 27
   };
 
   //if input is type searchable
@@ -31,7 +32,7 @@
 
   //focus the input textbox if user presses shift key
   function focusInput(e) {
-    if (e.keyCode === keys.shift) {
+    if (e.keyCode === keys.escape) {
       if (input) {
         input.focus();
         input.setSelectionRange(0, input.value.length);

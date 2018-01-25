@@ -30,7 +30,7 @@
     input = document.querySelector('input.search.ui-autocomplete-input');
   }
 
-  //focus the input textbox if user presses shift key
+  //focus the input textbox if user presses escape key
   function focusInput(e) {
     if (e.keyCode === keys.escape) {
       if (input) {

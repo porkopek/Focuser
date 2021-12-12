@@ -1,41 +1,52 @@
-/**
- * Set the focus on page first search box
- * after pressing shift key
- * For those who love to use their keyboards
- */
-
-(function() {
+(function () {
   'use strict';
 
-  //shift keyCode
   const keys = {
-    shift: 16,
-    escape: 27
+    escape: 27,
   };
 
-  //if input is type searchable
-  let input =
-    document.querySelector("input[type='input']") ||
-    document.querySelector('input[type="search"]') ||
-    document.querySelector("input[type='text']");
+  let index = 0;
 
-  const thisUrl = document.location.href;
+  let isValidInput = (element) => {
+    while (element) {
+      let nodeName = element.nodeName.toLowerCase();
 
-  //some especial cases that I use and have more than an input textbox
-  if (thisUrl.includes('priberam.pt')) {
-    input = document.getElementById(
-      'wordMeaningContentPlaceHolder_wordMeaningControl_SearchWordTextBox'
-    );
-  } else if (thisUrl.includes('academia.gal/dicionario')) {
-    input = document.querySelector('input.search.ui-autocomplete-input');
-  }
+      if (nodeName === 'body' || nodeName.includes('document')) return true;
 
-  //focus the input textbox if user presses escape key
+      let rect = element.getBoundingClientRect();
+      if (rect.height == 0 || rect.width == 0) return false;
+      element = element.parentNode;
+    }
+    return true;
+  };
+
+  const inputSelector =
+    "input[type='input'],input[type='search'],input[type='text'],input[type='tel'],input[type='email'],input[type='password'],[contenteditable],textarea";
+
   function focusInput(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    let allInputs = [...document.querySelectorAll(inputSelector)];
+    let validInputs = allInputs.filter((el) => isValidInput(el));
+
+    if (validInputs?.length === 0) {
+      validInputs = allInputs;
+    }
+    if (!validInputs) return;
+
+    if (index > validInputs.length - 1) {
+      index = validInputs.length - 1;
+    }
+
+    let input = validInputs[index];
+
     if (e.keyCode === keys.escape) {
       if (input) {
         input.focus();
         input.setSelectionRange(0, input.value.length);
+        index++;
+        if (index >= validInputs.length) index = 0;
       }
     }
   }
